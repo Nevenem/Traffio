@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Test{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<p>current session id: {{ test_id }}</p>
+<a href="/test/end">End the current test</a>
+{% endblock %}

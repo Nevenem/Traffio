@@ -1,37 +1,44 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import os.path
+import random
+import uuid
 
 import flask
 
-from flask import Flask
+from flask import Flask, render_template, make_response, request, redirect
+import traffio.flashcard as flashcards
 
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder=os.path.abspath("./traffio/templates/"))
 
 @app.route('/')
 def hello():
     return '''
-    Hello, World!
-    <a href="/stajenevena">sta je nevena?</a>
+    Welcome to Traffio!
+    <br>
+    <a href="/flashcard">Start learning with flash cards</a>
+    <br>
+    <a href="/test">Take a test</a>
     '''
 
-@app.route('/stajenevena')
-def stajenevena():
-    return '<h1> zlato najvece </h1>'
+@app.route('/flashcard')
+def flashcard():
+    flashcard_index = random.randint(0, flashcards.get_flashcard_count())
+    response = make_response(render_template("flashcard.html", flashcard_index=flashcard_index))
+    return response
 
-@app.route('/stajewebserver')
-def stajewebserver():
-    return '<h1> program koji slusa na nekom portu i obradjuje zahteve </h1>'
+@app.route('/test')
+def test():
+    test_id = str(uuid.uuid4())
+    if "TestId" in request.cookies:
+        test_id = request.cookies.get("TestId")
 
-# def print_hi(name):
-#     # Use a breakpoint in the code line below to debug your script.
-#     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-#
-#
-# # Press the green button in the gutter to run the script.
-# if __name__ == '__main__':
-#     print_hi('PyCharm')
-#
-# # See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    response = make_response(render_template("test.html", test_id=test_id))
+    response.set_cookie("TestId", test_id)
+
+    return response
+
+@app.route('/test/end')
+def test_end():
+    response = make_response(redirect("/"))
+    response.delete_cookie("TestId")
+    return response
+
