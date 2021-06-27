@@ -1,10 +1,29 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Test{% endblock %}</h1>
+  <h1>{% block title %}Traffic Sign Test{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-<p>current session id: {{ test_id }}</p>
+{% if test.current_question > test.question_count %}
+<p>Test complete!</p>
+<p>You got {{test.correct_count}} correct answers out of {{test.question_count}} questions!</p>
+<a href="/test/end">Back</a>
+{% else %}
+<p>Question {{test.current_question}} / {{test.question_count}}</p>
+<img src="/sign_img/img_{{test.correct_answer}}.jpg" width="300px" height="300px"/>
+<form action="/test/answer" method="POST">
+  <input type="radio" id="a1" value="0" name="answers">
+  <label for="a1">{{ answers[0].description }}</label>
+  <input type="radio" id="a2" value="1" name="answers">
+  <label for="a1">{{ answers[1].description }}</label>
+  <input type="radio" id="a3" value="2" name="answers">
+  <label for="a1">{{ answers[2].description }}</label>
+  <input type="radio" id="a4" value="3" name="answers">
+  <label for="a1">{{ answers[3].description }}</label>
+
+  <input type="submit" value="Submit">
+</form>
 <a href="/test/end">End the current test</a>
+{% endif %}
 {% endblock %}
