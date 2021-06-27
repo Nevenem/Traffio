@@ -1,4 +1,11 @@
-from flask import Flask, render_template, make_response, request, redirect, send_from_directory
+from flask import (
+    Flask,
+    render_template,
+    make_response,
+    request,
+    redirect,
+    send_from_directory,
+)
 import traffio.flashcard as flashcards
 import os, random, uuid
 
@@ -9,7 +16,7 @@ def create_app():
     app = Flask(__name__, template_folder=os.path.abspath("./traffio/templates/"))
 
     app.config.from_mapping(
-        DATABASE=os.path.join(app.instance_path, 'traffio.sqlite'),
+        DATABASE=os.path.join(app.instance_path, "traffio.sqlite"),
     )
 
     @app.route("/")
@@ -28,9 +35,7 @@ def create_app():
         flashcard_index = random.randint(min_idx, max_idx)
         fc = flashcards.get_flashcard(flashcard_index)
 
-        response = make_response(
-            render_template("flashcard.html", flashcard=fc)
-        )
+        response = make_response(render_template("flashcard.html", flashcard=fc))
         return response
 
     @app.route("/test")
@@ -43,14 +48,15 @@ def create_app():
             current_test = traffio.test.create_test(test_id)
             traffio.test.store_new_test(current_test)
 
-
         answers = (
             flashcards.get_flashcard(current_test.answers[0]),
             flashcards.get_flashcard(current_test.answers[1]),
             flashcards.get_flashcard(current_test.answers[2]),
-            flashcards.get_flashcard(current_test.answers[3])
+            flashcards.get_flashcard(current_test.answers[3]),
         )
-        response = make_response(render_template("test.html", test=current_test, answers=answers))
+        response = make_response(
+            render_template("test.html", test=current_test, answers=answers)
+        )
         response.set_cookie("TestId", test_id)
 
         return response
@@ -69,7 +75,7 @@ def create_app():
 
     @app.route("/sign_img/<path:path>")
     def sign_img(path):
-        return send_from_directory('media', path)
+        return send_from_directory("media", path)
 
     @app.route("/test/end")
     def test_end():

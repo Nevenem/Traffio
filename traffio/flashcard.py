@@ -7,6 +7,7 @@ class Flashcard:
         self.name = name
         self.description = description
 
+
 def get_flashcard_index_range():
     conn = db.get_db()
     cur = conn.cursor()
@@ -14,9 +15,10 @@ def get_flashcard_index_range():
     row = cur.fetchone()
     return (1, row[0])
 
+
 def get_flashcard(index):
     conn = db.get_db()
     cur = conn.cursor()
-    cur.execute("select * from flashcard where id=?;", (index, ))
+    cur.execute("select * from flashcard where id=?;", (index,))
     idx, name, description = cur.fetchone()
     return Flashcard(idx, name, description)

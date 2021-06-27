@@ -35,7 +35,6 @@ class Test:
         self.next_answer()
         store_test(self)
 
-
     def set_answer(self, answers, correct_answer):
         self.answers = answers
         self.correct_answer = correct_answer
@@ -45,35 +44,42 @@ class Test:
 
 
 def create_test(test_id, question_count=3):
-    return Test(test_id, question_count, traffio.flashcard.get_flashcard_index_range()[1])
+    return Test(
+        test_id, question_count, traffio.flashcard.get_flashcard_index_range()[1]
+    )
 
 
 def store_new_test(test):
     conn = get_db()
     cur = conn.cursor()
-    cur.execute(f"""
+    cur.execute(
+        f"""
             INSERT INTO test 
             VALUES
                 (
                 ?, ?, ?, ?, ?, ?, ?, ?, ?
                 );
-        """, (
-        test.test_id,
-        test.current_question,
-        test.question_count,
-        test.correct_count,
-        test.answers[0],
-        test.answers[1],
-        test.answers[2],
-        test.answers[3],
-        test.correct_answer,
-    ))
+        """,
+        (
+            test.test_id,
+            test.current_question,
+            test.question_count,
+            test.correct_count,
+            test.answers[0],
+            test.answers[1],
+            test.answers[2],
+            test.answers[3],
+            test.correct_answer,
+        ),
+    )
     conn.commit()
+
 
 def store_test(test):
     conn = get_db()
     cur = conn.cursor()
-    cur.execute(f"""
+    cur.execute(
+        f"""
             UPDATE test
             SET
                 currentQuestion = ?,
@@ -84,30 +90,47 @@ def store_test(test):
                 answer4 = ?,
                 correctAnswer = ?
             WHERE id = ?
-        """, (
-        test.current_question,
-        test.correct_count,
-        test.answers[0],
-        test.answers[1],
-        test.answers[2],
-        test.answers[3],
-        test.correct_answer,
-        test.test_id,
-    ))
+        """,
+        (
+            test.current_question,
+            test.correct_count,
+            test.answers[0],
+            test.answers[1],
+            test.answers[2],
+            test.answers[3],
+            test.correct_answer,
+            test.test_id,
+        ),
+    )
     conn.commit()
 
 
 def get_test(test_id):
     conn = get_db()
     cur = conn.cursor()
-    cur.execute(f"""
+    cur.execute(
+        f"""
         SELECT * FROM test
         WHERE id = ?
-    """, (test_id,))
+    """,
+        (test_id,),
+    )
     row = cur.fetchone()
-    test_id, current_question, question_count, correct_count, a1, a2, a3, a4, correct_answer = row
+    (
+        test_id,
+        current_question,
+        question_count,
+        correct_count,
+        a1,
+        a2,
+        a3,
+        a4,
+        correct_answer,
+    ) = row
 
-    current_test = Test(test_id, question_count, traffio.flashcard.get_flashcard_index_range()[1])
+    current_test = Test(
+        test_id, question_count, traffio.flashcard.get_flashcard_index_range()[1]
+    )
     current_test.current_question = current_question
     current_test.correct_count = correct_count
     current_test.set_answer((a1, a2, a3, a4), correct_answer)
