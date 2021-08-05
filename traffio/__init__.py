@@ -12,22 +12,28 @@ import os, random, uuid
 import traffio.test
 
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__, template_folder=os.path.abspath("./traffio/templates/"))
 
     app.config.from_mapping(
         DATABASE=os.path.join(app.instance_path, "traffio.sqlite"),
     )
 
+    if test_config:
+        app.config.from_mapping(test_config)
+
     @app.route("/")
     def hello():
-        return """
-        Welcome to Traffio!
-        <br>
-        <a href="/flashcard">Start learning with flash cards</a>
-        <br>
-        <a href="/test">Take a test</a>
-        """
+
+        response = make_response(render_template("index.html"))
+        return response
+        # return """
+        # Welcome to Traffio!
+        # <br>
+        # <a href="/flashcard">Start learning with flash cards</a>
+        # <br>
+        # <a href="/test">Take a test</a>
+        # """
 
     @app.route("/flashcard")
     def flashcard():

@@ -1,8 +1,12 @@
 <!doctype html>
+<head>
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 <title>Traffio - {% block title %}{% endblock %}</title>
+</head>
+
 <section class="content">
   <header>
     {% block header %}{% endblock %}
   </header>
-  {% block content %}{% endblock %}
+  {% block content %}{% endblock %} 
 </section>

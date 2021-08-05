@@ -1,3 +1,4 @@
+<div class="flashcard_center">
 {% extends 'base.html' %}
 
 {% block header %}
@@ -5,14 +6,16 @@
 {% endblock %}p
 
 {% block content %}
-<h2>{{ flashcard.name }}</h2>
+<h2 id="card_title">{{ flashcard.name }}</h2>
 
 <img src="/sign_img/img_{{flashcard.idx}}.jpg" width="300px" height="300px"/>
 
-<p>
+<p id="card_description">
 {{ flashcard.description }}
 </p>
 
 <br><br>
-<a href="/flashcard">Give me another!</a>
+<a id="another_card" href="/flashcard">Give me another!</a>
 {% endblock %}
+
+</div>

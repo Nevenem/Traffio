@@ -1,3 +1,4 @@
+<div class="test_center">
 {% extends 'base.html' %}
 
 {% block header %}
@@ -10,20 +11,31 @@
 <p>You got {{test.correct_count}} correct answers out of {{test.question_count}} questions!</p>
 <a href="/test/end">Back</a>
 {% else %}
-<p>Question {{test.current_question}} / {{test.question_count}}</p>
+<h2 id="question_num">Question {{test.current_question}} / {{test.question_count}}</h2>
 <img src="/sign_img/img_{{test.correct_answer}}.jpg" width="300px" height="300px"/>
 <form action="/test/answer" method="POST">
+  <p>
   <input type="radio" id="a1" value="0" name="answers">
   <label for="a1">{{ answers[0].description }}</label>
+</p>
+<p>
   <input type="radio" id="a2" value="1" name="answers">
   <label for="a1">{{ answers[1].description }}</label>
+</p>
+<p>
   <input type="radio" id="a3" value="2" name="answers">
   <label for="a1">{{ answers[2].description }}</label>
+</p>
+<p>
   <input type="radio" id="a4" value="3" name="answers">
   <label for="a1">{{ answers[3].description }}</label>
+</p>
+  <br/>
 
   <input type="submit" value="Submit">
 </form>
 <a href="/test/end">End the current test</a>
 {% endif %}
 {% endblock %}
+
+</div>

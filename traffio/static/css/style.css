@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@451&display=swap");
+
+
+/* INDEX style */
+body {
+  font-family: Raleway ;
+  background-color: #70c1b3 ;
+}
+
+.center {
+background-color: #f25f5c;
+border: 5px solid #42756d;
+text-align: center;
+width: 800px;
+height: 400px;
+position: absolute;
+top:0;
+bottom: 0;
+left: 0;
+right: 0;
+margin: auto;
+padding-top: 50px;
+}
+
+.row {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  padding-top: 20px;
+}
+
+h1 {
+  font-size: 60px;
+  color: #ffe066;
+}
+a {
+  font-size: x-large;
+  color: #ffe066;
+}
+
+
+/* FLASHCARD style */
+
+.flashcard_center {
+
+text-align: center;
+width: 800px;
+height: 400px;
+position: absolute;
+top:0;
+bottom: 0;
+left: 0;
+right: 0;
+margin: auto;
+padding-bottom: 300px;
+}
+
+#another_card {
+  color: #f25f5c;
+  
+}
+
+#card_description {
+  font-size: 20px;
+}
+
+#card_title {
+  color: #f25f5c;
+}
+
+/* TEST style */
+
+.test_center {
+
+  text-align: center;
+  width: 1000px;
+  height: 700px;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding-bottom: 100px;
+  }
+
+  #question_num {
+    
+
+  }
+  input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555555;
+    border-radius: 50%;
+    background-clip: content-box;
+    text-align: left;
+    padding: 5px;
+    position: fixed;
+  }
+
+  label {
+    padding-left: 50px;
+    
+  }
+
+  form {
+    text-align: left;
+  }
+
+  p {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  input[type="radio"]:checked {
+    background-color: #555555;
+  }
+
